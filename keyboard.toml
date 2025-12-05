@@ -67,7 +67,7 @@ _  _  _  _  _  _  _  _  AudioMute  AudioVolDown  AudioVolUp
 [[layer]]
 name = "marco_layer"
 keys = """
-_  _  _  _  _  _  _  _  _  _  _ PREV_BT  NEXT_BT  _
+_  _  _  _  _  _  _  _  _  _  _  _  _  _
 _  _  _  _  _  _  _  _  _  _  _ TO(0)  TO(1)  _
 _  _  _  _  _  _  _  _  _  _  WM(Insert, LCtrl)  WM(Insert, LShift)  _
 _  _  _  _  _  _  _  _  _  _  _  _  _  _
