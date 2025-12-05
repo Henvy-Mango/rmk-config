@@ -14,6 +14,14 @@ col_pins = ["P1_13", "P0_02", "P0_29", "P0_31", "P0_15", "P0_24", "P1_00", "P1_0
 # WARNING: Currently row2col/col2row is set in RMK's feature gate, configs here do nothing actually
 # row2col = true
 
+# ================= behavior ================
+[behavior.morse]
+morses = [
+    { tap = "RCTRL", hold = "RCTRL", hold_after_tap = "MO(3)", double_tap = "MO(3)" },
+    { tap = "RGUI", hold = "RGUI", hold_after_tap = "MO(3)", double_tap = "MO(3)" }
+]
+
+# ================= layout ==================
 [layout]
 rows = 5
 cols = 14
@@ -22,9 +30,16 @@ keymap = [
     [
         ["Escape", "Kc1", "Kc2", "Kc3", "Kc4", "Kc5", "Kc6", "Kc7", "Kc8", "Kc9", "Kc0", "Minus", "Equal", "Backspace"],
         ["Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "LeftBracket", "RightBracket", "Backslash"],
-        ["CapsLock", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Semicolon", "Quote", "_", "Enter"],
+        ["LT(3, CapsLock)", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Semicolon", "Quote", "_", "Enter"],
         ["LShift", "Z", "X", "C", "V", "B", "N", "M", "Comma", "Dot", "Slash", "RShift", "UP", "Delete"],
-        ["LCtrl", "LGui", "LAlt", "MO(1)", "_", "_", "Space", "_", "MO(1)", "RAlt", "RCtrl", "Left", "Down", "Right"]
+        ["LCtrl", "LGui", "LAlt", "MO(2)", "_", "_", "Space", "_", "MO(2)", "RAlt", "TD(0)", "Left", "Down", "Right"]
+    ],
+    [
+        ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
+        ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
+        ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
+        ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
+        ["_", "LAlt", "LGui", "_", "_", "_", "_", "_", "_", "_", "TD(1)", "_", "_", "_"]
     ],
     [
         ["Grave", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "_"],
@@ -32,7 +47,14 @@ keymap = [
         ["_", "_", "Left", "Down", "Right", "_", "_", "Insert", "Home", "PageUp", "_", "_", "_", "_"],
         ["_", "_", "_", "_", "_", "_", "_", "_", "End", "PageDown", "_", "_", "_", "_"],
         ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "AudioMute", "AudioVolDown", "AudioVolUp"]
-    ]
+    ],
+    [
+        ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "PREV_BT", "NEXT_BT", "_"],
+        ["_", "Home", "End", "_", "_", "_", "_", "_", "_", "_", "_", "TO(0)", "TO(1)", "_"],
+        ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "WM(Insert, LShift)", "WM(Insert, LShift)", "_", "_"],
+        ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
+        ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "MediaPrevTrack", "MediaPlayPause", "MediaNextTrack"],
+    ],
 ]
 
 [light]
