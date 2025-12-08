@@ -58,7 +58,7 @@ _  _  _  _  _  _  _  _  AudioMute  AudioVolDown  AudioVolUp
 [[layer]]
 name = "marco_layer"
 keys = """
-_  _  _  _  _  _  _  _  _  _  _  _  _  _
+Macro0  _  _  _  _  _  _  _  _  _  _  _  _  _
 _  _  _  _  _  _  _  _  _  _  _ TO(0)  TO(1)  _
 _  _  _  _  _  _  _  _  _  _  WM(Insert, LCtrl)  WM(Insert, LShift)  _
 _  _  _  _  _  _  _  _  _  _  _  _  _  _
@@ -90,7 +90,7 @@ operations = [
 
 # ================= other ===================
 [light]
-capslock = { pin = "P0_05", low_active = true}
+capslock = { pin = "P0_05", low_active = false}
 
 [storage]
 # Storage feature is enabled by default
@@ -105,4 +105,4 @@ adc_divider_measured = 2000
 adc_divider_total = 2820
 
 [host]
-unlock_keys = [[2, 4], [2, 8]]
+unlock_keys = [[2, 4], [2, 7]]
