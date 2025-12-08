@@ -1,5 +1,6 @@
 name: Build RMK firmware
 on:
+  branches: [ master ]
   workflow_dispatch:
   push:
     paths:

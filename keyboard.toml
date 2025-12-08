@@ -8,18 +8,8 @@ manufacturer = "naomi233"
 chip = "nrf52840"
 
 [matrix]
-# Input and output pins are mandatory
 row_pins = ["P0_17", "P0_20", "P0_13", "P0_22", "P0_30"]
 col_pins = ["P1_13", "P0_02", "P0_29", "P0_31", "P0_15", "P0_24", "P1_00", "P1_02", "P1_04", "P0_09", "P1_11", "P1_10", "P0_03", "P0_28"]
-# WARNING: Currently row2col/col2row is set in RMK's feature gate, configs here do nothing actually
-# row2col = true
-
-# ================= behavior ================
-[behavior.morse]
-morses = [
-    { tap = "RCTRL", hold = "RCTRL", hold_after_tap = "MO(3)", double_tap = "MO(3)" },
-    { tap = "RGUI", hold = "RGUI", hold_after_tap = "MO(3)", double_tap = "MO(3)" }
-]
 
 # ================= layout ==================
 [layout]
@@ -34,6 +24,7 @@ matrix_map = """
 (4,0) (4,1) (4,2) (4,3) (4,6) (4,8) (4,9) (4,10) (4,11) (4,12) (4,13)
 """
 
+# ================= layer ===================
 [[layer]]
 name = "base_layer"
 keys = """
@@ -74,15 +65,32 @@ _  _  _  _  _  _  _  _  _  _  _  _  _  _
 _  _  _  _  _  _  _  _  MediaPrevTrack  MediaPlayPause  MediaNextTrack
 """
 
+# ================= behavior ================
+[behavior.morse]
+morses = [
+    { tap = "RCTRL", hold = "RCTRL", hold_after_tap = "MO(3)", double_tap = "MO(3)" },
+    { tap = "RGUI", hold = "RGUI", hold_after_tap = "MO(3)", double_tap = "MO(3)" }
+]
+
+[behavior.fork]
+forks = [
+    { trigger = "Escape", negative_output = "Escape", positive_output = "Grave", match_any = "LShift", match_none = "LCtrl|RCtrl", bindable = false }
+]
+
+[behavior.combo]
+timeout = "150ms"
+combos = [
+    { actions = ["Lshift", "Rshift", "B"], output = "Tab", layer = 0 }
+]
+
+[[behavior.macro.macros]]
+operations = [
+    { operation = "text", text = "Hello World" }
+]
+
+# ================= other ===================
 [light]
-# All light pins are high-active by default, uncomment if you want it to be low-active
-# capslock.pin = "PB2"
-# capslock.low_active = true
-# scrolllock.pin = "PA3"
-# scrolllock.low_active = true
-# Just ignore if no light pin is used for it
-# numslock.pin = "PA5"
-# numslock.low_active = true
+capslock = { pin = "P0_5", low_active = true}
 
 [storage]
 # Storage feature is enabled by default
@@ -90,14 +98,8 @@ _  _  _  _  _  _  _  _  MediaPrevTrack  MediaPlayPause  MediaNextTrack
 
 [ble]
 enabled = true
-# vddh has an internal voltage divider
-# battery_adc_pin = "vddh"
-# Or
-# battery_adc_pin = "P0_04"
-# adc_divider_measured = 2000
-# adc_divider_total = 2820
 
-# charge_state.pin = "P0_25"
-# charge_state.low_active = false
-# charge_led.pin = "P0_29"
-# charge_led.low_active = false
+battery_adc_pin = "P0_4"
+
+adc_divider_measured = 2000
+adc_divider_total = 2820
