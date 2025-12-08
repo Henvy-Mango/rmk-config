@@ -90,7 +90,7 @@ operations = [
 
 # ================= other ===================
 [light]
-capslock = { pin = "P0_5", low_active = true}
+capslock = { pin = "P0_05", low_active = true}
 
 [storage]
 # Storage feature is enabled by default
@@ -99,7 +99,7 @@ capslock = { pin = "P0_5", low_active = true}
 [ble]
 enabled = true
 
-battery_adc_pin = "P0_4"
+battery_adc_pin = "P0_04"
 
 adc_divider_measured = 2000
 adc_divider_total = 2820
