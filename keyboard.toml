@@ -58,7 +58,7 @@ _  _  _  _  _  _  _  _  AudioMute  AudioVolDown  AudioVolUp
 [[layer]]
 name = "marco_layer"
 keys = """
-Macro(0)  _  _  _  _  _  _  _  _  _  _  _  _  _
+_  _  _  _  _  _  _  _  _  _  _  _  _  _
 _  _  _  _  _  _  _  _  _  _  _ TO(0)  TO(1)  _
 _  _  _  _  _  _  _  _  _  _  WM(Insert, LCtrl)  WM(Insert, LShift)  _
 _  _  _  _  _  _  _  _  _  _  _  _  _  _
@@ -80,7 +80,7 @@ forks = [
 [behavior.combo]
 timeout = "150ms"
 combos = [
-    { actions = ["Lshift", "Rshift", "B"], output = "Escape", layer = 0 }
+    { actions = ["Lshift", "Rshift", "B"], output = "Comma", layer = 0 }
 ]
 
 [[behavior.macro.macros]]
