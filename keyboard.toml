@@ -103,3 +103,6 @@ battery_adc_pin = "P0_04"
 
 adc_divider_measured = 2000
 adc_divider_total = 2820
+
+[host]
+unlock_keys = [[2, 4], [2, 8]]
