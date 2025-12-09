@@ -92,10 +92,6 @@ operations = [
 [light]
 capslock = { pin = "P0_05", low_active = false}
 
-[storage]
-# Storage feature is enabled by default
-# enabled = false
-
 [ble]
 enabled = true
 
@@ -106,3 +102,7 @@ adc_divider_total = 2820
 
 [host]
 unlock_keys = [[2, 4], [2, 7]]
+
+[storage]
+# Set `clear_storage` to true to clear all the stored info when the keyboard boots
+clear_storage = true
