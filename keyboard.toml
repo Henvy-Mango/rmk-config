@@ -105,4 +105,4 @@ unlock_keys = [[2, 4], [2, 7]]
 
 [storage]
 # Set `clear_storage` to true to clear all the stored info when the keyboard boots
-clear_storage = true
+# clear_storage = true
