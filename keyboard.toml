@@ -1,4 +1,5 @@
-# Documentation: https://haobogu.github.io/rmk/keyboard_configuration.html
+# RMK v0.9: https://rmk.rs/docs/getting_started/introduction
+# Ported from https://github.com/Henvy-Mango/zmk-config (ggbr).
 [keyboard]
 name = "ggbr minila"
 product_name = "ggbr minila"
@@ -8,6 +9,7 @@ manufacturer = "naomi233"
 chip = "nrf52840"
 
 [matrix]
+# ZMK's col2row diode direction and active-high rows match RMK's defaults.
 row_pins = ["P0_17", "P0_20", "P0_13", "P0_22", "P0_30"]
 col_pins = ["P1_13", "P0_02", "P0_29", "P0_31", "P0_15", "P0_24", "P1_00", "P1_02", "P1_04", "P0_09", "P1_11", "P1_10", "P0_03", "P0_28"]
 
@@ -15,8 +17,7 @@ col_pins = ["P1_13", "P0_02", "P0_29", "P0_31", "P0_15", "P0_24", "P1_00", "P1_0
 [layout]
 rows = 5
 cols = 14
-layers = 4
-matrix_map = """
+map = """
 (0,0) (0,1) (0,2) (0,3) (0,4) (0,5) (0,6) (0,7) (0,8) (0,9) (0,10) (0,11) (0,12) (0,13)
 (1,0) (1,1) (1,2) (1,3) (1,4) (1,5) (1,6) (1,7) (1,8) (1,9) (1,10) (1,11) (1,12) (1,13)
 (2,0) (2,1) (2,2) (2,3) (2,4) (2,5) (2,6) (2,7) (2,8) (2,9) (2,10) (2,11) (2,13)
@@ -24,8 +25,11 @@ matrix_map = """
 (4,0) (4,1) (4,2) (4,3) (4,6) (4,8) (4,9) (4,10) (4,11) (4,12) (4,13)
 """
 
+[keymap]
+layers = 4
+
 # ================= layer ===================
-[[layer]]
+[[keymap.layer]]
 name = "base_layer"
 keys = """
 Escape  Kc1  Kc2  Kc3  Kc4  Kc5  Kc6  Kc7  Kc8  Kc9  Kc0  Minus  Equal  Backspace
@@ -35,7 +39,7 @@ LShift  Z  X  C  V  B  N  M  Comma  Dot  Slash  RShift  UP  Delete
 LCtrl  LGui  LAlt  MO(2)  Space  MO(2)  RAlt  TD(0)  Left  Down  Right
 """
 
-[[layer]]
+[[keymap.layer]]
 name = "mac_layer"
 keys = """
 _  _  _  _  _  _  _  _  _  _  _  _  _  _
@@ -45,21 +49,21 @@ _  _  _  _  _  _  _  _  _  _  _  _  _  _
 _  LAlt  LGui  _  _  _  _  TD(1)  _  _  _
 """
 
-[[layer]]
+[[keymap.layer]]
 name = "fn_layer"
 keys = """
-Grave  F1  F2  F3  F4  F5  F6  F7  F8  F9  F10  F11  F12  _
+WM(Grave,LShift)  F1  F2  F3  F4  F5  F6  F7  F8  F9  F10  F11  F12  _
 _  WM(Kc9, LShift)  WM(Kc0, LShift)  UP  _  _  Calculator  _  PrintScreen  ScrollLock  Pause  _  _  _
 _  _  Left  Down  Right  _  _  Insert  Home  PageUp  _  _  _
 _  _  _  _  _  _  _  _  End  PageDown  _  _  _  _
 _  _  _  _  _  _  _  _  AudioMute  AudioVolDown  AudioVolUp
 """
 
-[[layer]]
-name = "marco_layer"
+[[keymap.layer]]
+name = "macro_layer"
 keys = """
-_  _  _  _  _  _  _  _  _  _  _  _  _  _
-_  _  _  _  _  _  _  _  _  _  _ TO(0)  TO(1)  _
+_  Macro0  Macro1  _  _  _  _  _  _  _  _  User4  User3  _
+_  Home  End  _  _  _  _  _  _  _  _  TO(0)  TO(1)  _
 _  _  _  _  _  _  _  _  _  _  WM(Insert, LCtrl)  WM(Insert, LShift)  _
 _  _  _  _  _  _  _  _  _  _  _  _  _  _
 _  _  _  _  _  _  _  _  MediaPrevTrack  MediaPlayPause  MediaNextTrack
@@ -73,19 +77,27 @@ morses = [
 ]
 
 [behavior.fork]
+# ZMK &gresc sends Grave with Shift or GUI, Escape otherwise.
 forks = [
-    { trigger = "Escape", negative_output = "Escape", positive_output = "Grave", match_any = "LShift", match_none = "LCtrl|RCtrl", bindable = false }
+    { trigger = "Escape", negative_output = "Escape", positive_output = "Grave", match_any = "LShift|RShift|LGui|RGui", bindable = false }
 ]
 
 [behavior.combo]
 timeout = "150ms"
 combos = [
-    { actions = ["Lshift", "Rshift", "B"], output = "Comma", layer = 0 }
+    { actions = ["LShift", "RShift", "B"], output = "Bootloader", layer = 0 },
+    { actions = ["LShift", "RShift", "Backspace"], output = "Reboot", layer = 0 },
+    { actions = ["LShift", "RShift", "U"], output = "User6", layer = 0 },
 ]
 
 [[behavior.macro.macros]]
 operations = [
-    { operation = "text", text = "Hello World" }
+    { operation = "text", text = "134133987" }
+]
+
+[[behavior.macro.macros]]
+operations = [
+    { operation = "text", text = "807082193" }
 ]
 
 # ================= other ===================
@@ -94,11 +106,10 @@ capslock = { pin = "P0_05", low_active = false}
 
 [ble]
 enabled = true
-
 battery_adc_pin = "P0_04"
-
 adc_divider_measured = 2000
 adc_divider_total = 2820
+default_tx_power = 8
 
 [host]
 unlock_keys = [[2, 4], [2, 7]]
@@ -106,3 +117,7 @@ unlock_keys = [[2, 4], [2, 7]]
 [storage]
 # Set `clear_storage` to true to clear all the stored info when the keyboard boots
 # clear_storage = true
+
+[rmk]
+# ZMK used a 15-minute idle sleep timeout.
+split_central_sleep_timeout_seconds = 900

@@ -2,13 +2,11 @@ name: Build RMK firmware
 on:
   workflow_dispatch:
   push:
-    branches: [ master ]
-    paths:
-      - "**"
 
 jobs:
   build:
-    uses: haobogu/rmk/.github/workflows/user_build.yml@main
+    uses: rmk-rs/rmk/.github/workflows/user_build.yml@rmk-v0.9.0
     with:
       keyboard_toml_path: "keyboard.toml"
       vial_json_path: "vial.json"
+      rmk_version: "0.9"
