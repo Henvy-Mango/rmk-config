@@ -7,9 +7,9 @@ See [配置核对与硬件版本差异](CONFIG_AUDIT.md) for the configuration a
 ## Mapped behavior
 
 - Four layers: base, Mac modifier swap, Fn, and macro/media.
-- 5 ms debounce, 200 ms tap/hold timing, and a 50 ms combo window match ZMK v0.3's defaults. Combos have no layer restriction, so they also work on the Mac layer; RMK still matches actions rather than physical positions.
+- Use RMK v0.9 defaults: 20 ms debounce, 250 ms Morse hold/gap timing, and a 50 ms combo window. These settings are omitted from TOML so RMK supplies its defaults. Combos have no layer restriction, so they also work on the Mac layer; RMK still matches actions rather than physical positions.
 - Grave/Escape, Caps Lock layer-tap, right Ctrl tap dance, right GUI tap dance, and two numeric macros.
-- The tap dances resolve held modifiers on another key press; Caps Lock retains its separate tap-preferred behavior. Vial starts unlocked, matching the source's disabled Studio locking.
+- Tap dances and Caps Lock layer-tap use RMK's default Normal Morse mode, without a custom ZMK timing/decision profile. Vial starts unlocked, matching the source's disabled Studio locking.
 - Shift + Shift + B enters the bootloader; Shift + Shift + Backspace reboots; Shift + Shift + U toggles preferred USB/BLE output.
 - The macro layer has previous/next BLE profile keys. With the default three RMK profiles, `User4` is previous and `User3` is next. `User5` clears the current bond when assigned in Vial; it does not clear every profile.
 - Caps Lock indicator, battery ADC divider, BLE transmit power, and 15-minute BLE idle sleep.

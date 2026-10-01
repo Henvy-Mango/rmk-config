@@ -73,19 +73,11 @@ _  _  _  _  _  _  _  _  MediaPrevTrack  MediaPlayPause  MediaNextTrack
 
 # ================= behavior ================
 [behavior.morse]
-# ZMK v0.3 layer-tap is tap-preferred with a 200 ms tapping term.
-normal_mode = true
-hold_timeout = "200ms"
-gap_timeout = "200ms"
+# Use RMK v0.9's default Morse mode and 250 ms hold/gap timings.
 morses = [
-    { tap = "RCTRL", hold = "RCTRL", hold_after_tap = "MO(3)", double_tap = "MO(3)", profile = "ZMK_DANCE" },
-    { tap = "RGUI", hold = "RGUI", hold_after_tap = "MO(3)", double_tap = "MO(3)", profile = "ZMK_DANCE" }
+    { tap = "RCTRL", hold = "RCTRL", hold_after_tap = "MO(3)", double_tap = "MO(3)" },
+    { tap = "RGUI", hold = "RGUI", hold_after_tap = "MO(3)", double_tap = "MO(3)" }
 ]
-
-[behavior.morse.profiles]
-# ZMK resolves a tap dance when another key is pressed. Keep modifier chords
-# responsive, without changing Caps Lock's tap-preferred layer-tap behavior.
-ZMK_DANCE = { hold_on_other_press = true, hold_timeout = "200ms", gap_timeout = "200ms" }
 
 [behavior.fork]
 # ZMK &gresc sends Grave with Shift or GUI, Escape otherwise.
@@ -94,9 +86,8 @@ forks = [
 ]
 
 [behavior.combo]
-# Original ZMK combos use the default 50 ms window and no layer restriction.
+# Use RMK v0.9's default combo window (50 ms), with no layer restriction.
 # RMK matches actions rather than physical positions; see CONFIG_AUDIT.md.
-timeout = "50ms"
 combos = [
     { actions = ["LShift", "RShift", "B"], output = "Bootloader" },
     { actions = ["LShift", "RShift", "Backspace"], output = "Reboot" },
@@ -141,8 +132,7 @@ unlock_keys = [[2, 4], [2, 7]]
 # clear_storage = true
 
 [rmk]
-# ZMK's GPIO matrix defaults to 5 ms debounce on both press and release.
-debounce_time = 5
+# Use RMK v0.9's default debounce time (20 ms).
 # User3..User6 bindings above depend on having exactly three BLE profiles.
 ble_profiles_num = 3
 # ZMK used a 15-minute idle sleep timeout.
