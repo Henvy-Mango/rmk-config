@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | 消抖 | 显式 5 ms | 删除覆盖，使用 RMK 默认 20 ms |
 | Caps Lock 点按/长按 | 显式 200 ms、normal 模式 | 删除覆盖，使用 RMK 默认 Normal 模式，hold/gap 各 250 ms |
-| 右 Ctrl / Mac 右 Option tap dance | 200 ms、独立 `hold_on_other_press` profile | 删除专用 profile，使用 RMK 默认判定和 hold/gap 各 250 ms；保留双击/点按后长按的 MO(3) 动作 |
+| 右 Ctrl / Mac 右 Option tap dance | 200 ms、独立 `hold_on_other_press` profile | 删除专用 profile，使用 RMK 默认判定和 hold/gap 各 250 ms；双击/点按后长按现在进入原宏层 MO(4) |
 | 组合键窗口 | 显式 50 ms（更早的配置曾为 150 ms） | 删除覆盖，RMK v0.9 默认也是 50 ms |
 | 组合键层限制 | 仅 layer 0 | 删除限制，使 Mac 层也可触发 |
 | 主机配置解锁 | 默认 Vial 锁定 | `host.insecure = true`，沿用旧 `CONFIG_ZMK_STUDIO_LOCKING=n`；连接的主机无需实体解锁组合即可使用受保护的 Vial 操作 |
@@ -22,7 +22,7 @@
 | --- | --- |
 | 主控 | nRF52840 / E73-2G4M08S1C |
 | 矩阵 | 5×14，66 个实际键位；col2row；引脚与旧配置及打样 Gerber 一致，新旧 PCB 的 COL9 差异见下方 |
-| 六层键位、宏、多媒体键 | 原四层基础上新增 Mac Fn 和 Mac 多媒体层，详见 [MAC_LAYOUT.md](MAC_LAYOUT.md)；Grave/Escape 通过 fork 保留 ZMK 的 Shift/GUI 条件及修饰键抑制方式 |
+| 系统分层、宏、已有媒体键 | 按 SKN 分为 Mac 0/1、Windows 2/3，原宏层保留为第 4 层；无新增媒体映射，详见 [MAC_LAYOUT.md](MAC_LAYOUT.md)；Grave/Escape 通过 fork 保留 ZMK 的 Shift/GUI 条件及修饰键抑制方式 |
 | USB + BLE | 已启用；nRF52840 的默认芯片配置启用 USB |
 | 低功耗扫描 | 官方 nRF52840 Cargo 模板已启用 `async_matrix`，不必另加 TOML 开关 |
 | NFC 引脚作为 GPIO | 官方模板已启用 `embassy-nrf/nfc-pins-as-gpio`，适用于旧配置中的 P0.09 |
@@ -46,7 +46,7 @@
 3. **深度关机**：原 Fn+Delete 进入 soft-off、H 唤醒，没有迁移为等效功能。RMK 的 900 秒 idle manager 发布休眠状态、暂停电池报告等，不能据此声称它进入了 nRF System OFF。原 30 秒 ZMK idle 阶段也无直接对应项。
 4. **清空全部蓝牙档位**：原四键 `BT_CLR_ALL` 没有等价单个动作。可在 Vial 给按键分配 `User5`，逐档清除当前配对；没有替换成会抹掉键位设置的整库重置。ZMK 的配对信息不会迁移，需要在主机端忘记旧设备后重新配对。
 5. **组合键语义**：ZMK 按物理位置匹配，RMK 按当前解析的动作匹配。删除层限制修好了 Mac 层，但如果后续重映射 B/U/Shift 等键，组合键不会自动跟随原物理位置。
-6. **Tap dance 精确时序**：ZMK 两动作 tap dance 在第二次按下时立即激活 MO(3)；RMK 使用 Morse 判定，解析时机取决于 Morse 模式、按键释放和超时。当前按用户偏好使用默认 Normal 模式，不再用独立的 hold-on-other-press profile 对齐 ZMK；默认点按/长按窗口为 250 ms，两种状态机并非完全相同。
+6. **Tap dance 精确时序**：ZMK 两动作 tap dance 在第二次按下时立即激活其宏层（原 MO(3)，本分支已重排为 MO(4)）；RMK 使用 Morse 判定，解析时机取决于 Morse 模式、按键释放和超时。当前按用户偏好使用默认 Normal 模式，不再用独立的 hold-on-other-press profile 对齐 ZMK；默认点按/长按窗口为 250 ms，两种状态机并非完全相同。
 7. **复位期间的 RGB 供电**：原理图 R6 为 2 MΩ 下拉，MCU 尚未初始化时 Q3 默认导通。固件只负责初始化后关闭，无法替代硬件上拉改版。
 
 ## 已确认的打样板接线及版本差异

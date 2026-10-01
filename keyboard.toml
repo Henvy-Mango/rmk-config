@@ -28,31 +28,44 @@ map = """
 """
 
 [keymap]
-layers = 6
+layers = 5
 
-# ================= layer ===================
+# Match the inspected SKN layer pairs: Mac 0/1, Windows 2/3.
+# Both base layers are complete; Fn transparencies inherit only the selected base.
+# Keep the original macro/media bindings on layer 4; no new media shortcuts.
+# Fn+number stays F1-F12 on this 66-key board without a separate F row.
 [[keymap.layer]]
-name = "base_layer"
+name = "mac_base"
 keys = """
 Escape  Kc1  Kc2  Kc3  Kc4  Kc5  Kc6  Kc7  Kc8  Kc9  Kc0  Minus  Equal  Backspace
 Tab  Q  W  E  R  T  Y  U  I  O  P  LeftBracket  RightBracket  Backslash
-LT(3, CapsLock)  A  S  D  F  G  H  J  K  L  Semicolon  Quote  Enter
+LT(4, CapsLock)  A  S  D  F  G  H  J  K  L  Semicolon  Quote  Enter
 LShift  Z  X  C  V  B  N  M  Comma  Dot  Slash  RShift  UP  Delete
-LCtrl  LGui  LAlt  MO(2)  Space  MO(2)  RAlt  TD(0)  Left  Down  Right
+LCtrl  LAlt  LGui  MO(1)  Space  MO(1)  RGui  TD(1)  Left  Down  Right
 """
 
 [[keymap.layer]]
-name = "mac_layer"
+name = "mac_fn"
 keys = """
-_  _  _  _  _  _  _  _  _  _  _  _  _  _
-_  _  _  _  _  _  _  _  _  _  _  _  _  _
-_  _  _  _  _  _  _  _  _  _  _  _  _
-_  _  _  _  _  _  _  _  _  _  _  _  _  _
-_  LAlt  LGui  MO(4)  _  MO(4)  RGui  TD(1)  _  _  _
+WM(Grave,LShift)  F1  F2  F3  F4  F5  F6  F7  F8  F9  F10  F11  F12  _
+_  WM(Kc9, LShift)  WM(Kc0, LShift)  UP  _  _  Calculator  _  PrintScreen  ScrollLock  Pause  _  _  _
+_  _  Left  Down  Right  _  _  Insert  Home  PageUp  _  _  _
+_  _  _  _  _  _  _  _  End  PageDown  _  _  _  _
+_  _  _  _  _  _  _  _  AudioMute  AudioVolDown  AudioVolUp
 """
 
 [[keymap.layer]]
-name = "fn_layer"
+name = "win_base"
+keys = """
+Escape  Kc1  Kc2  Kc3  Kc4  Kc5  Kc6  Kc7  Kc8  Kc9  Kc0  Minus  Equal  Backspace
+Tab  Q  W  E  R  T  Y  U  I  O  P  LeftBracket  RightBracket  Backslash
+LT(4, CapsLock)  A  S  D  F  G  H  J  K  L  Semicolon  Quote  Enter
+LShift  Z  X  C  V  B  N  M  Comma  Dot  Slash  RShift  UP  Delete
+LCtrl  LGui  LAlt  MO(3)  Space  MO(3)  RAlt  TD(0)  Left  Down  Right
+"""
+
+[[keymap.layer]]
+name = "win_fn"
 keys = """
 WM(Grave,LShift)  F1  F2  F3  F4  F5  F6  F7  F8  F9  F10  F11  F12  _
 _  WM(Kc9, LShift)  WM(Kc0, LShift)  UP  _  _  Calculator  _  PrintScreen  ScrollLock  Pause  _  _  _
@@ -65,42 +78,18 @@ _  _  _  _  _  _  _  _  AudioMute  AudioVolDown  AudioVolUp
 name = "macro_layer"
 keys = """
 _  Macro0  Macro1  _  _  _  _  _  _  _  _  User4  User3  _
-_  Home  End  _  _  _  _  _  _  _  _  TO(0)  TO(1)  _
+_  Home  End  _  _  _  _  _  _  _  _  PDF(2)  PDF(0)  _
 _  _  _  _  _  _  _  _  _  _  WM(Insert, LCtrl)  WM(Insert, LShift)  _
 _  _  _  _  _  _  _  _  _  _  _  _  _  _
 _  _  _  _  _  _  _  _  MediaPrevTrack  MediaPlayPause  MediaNextTrack
-"""
-
-# Separate Mac Fn layer, following Keychron's OS-specific layer approach.
-# Keep F1-F12 on Fn+number; hold Fn, then Space, for the media layer.
-[[keymap.layer]]
-name = "mac_fn_layer"
-keys = """
-WM(Grave,LShift)  F1  F2  F3  F4  F5  F6  F7  F8  F9  F10  F11  F12  _
-_  WM(Kc9, LShift)  WM(Kc0, LShift)  UP  _  _  Calculator  _  PrintScreen  ScrollLock  Pause  _  _  _
-_  _  Left  Down  Right  _  _  Insert  Home  PageUp  _  _  _
-_  _  _  _  _  _  _  _  End  PageDown  _  _  _  _
-_  _  _  _  MO(5)  _  _  _  AudioMute  AudioVolDown  AudioVolUp
-"""
-
-# Keychron V4-style media order. No RGB driver: positions 5/6 do nothing.
-# Host support for MissionControl/Launchpad and brightness must be tested.
-[[keymap.layer]]
-name = "mac_media_layer"
-keys = """
-_  BrightnessDown  BrightnessUp  MissionControl  Launchpad  No  No  MediaPrevTrack  MediaPlayPause  MediaNextTrack  AudioMute  AudioVolDown  AudioVolUp  _
-_  _  _  _  _  _  _  _  _  _  _  _  _  _
-_  _  _  _  _  _  _  _  _  _  _  _  _
-_  _  _  _  _  _  _  _  _  _  _  _  _  _
-_  _  _  _  _  _  _  _  _  _  _
 """
 
 # ================= behavior ================
 [behavior.morse]
 # Use RMK v0.9's default Morse mode and 250 ms hold/gap timings.
 morses = [
-    { tap = "RCTRL", hold = "RCTRL", hold_after_tap = "MO(3)", double_tap = "MO(3)" },
-    { tap = "RALT", hold = "RALT", hold_after_tap = "MO(3)", double_tap = "MO(3)" }
+    { tap = "RCTRL", hold = "RCTRL", hold_after_tap = "MO(4)", double_tap = "MO(4)" },
+    { tap = "RALT", hold = "RALT", hold_after_tap = "MO(4)", double_tap = "MO(4)" }
 ]
 
 [behavior.fork]

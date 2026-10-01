@@ -1,48 +1,58 @@
-# Mac 键位、Vial 与休眠参数
+# 按 SKN Launcher 调整 Mac / Windows 分层
 
-## 设计依据
+## 已查看的参考
 
-参考 [Keychron V4 官方组合键表](https://www.keychron.com/blogs/news/v4-key-combinations)的媒体键顺序，以及 [Keychron 在 QMK 上的 Mac/Windows 分层实现](https://github.com/qmk/qmk_firmware/blob/master/keyboards/keychron/c3_pro/ansi/rgb/keymaps/default/keymap.c)。按用户要求，保留 Fn + 数字行 = F1–F12，另外提供 Mac 多媒体层。
+用户连接的 SKN Launcher：QingLong 87 Ultra 8K ANSI，2026-10-02，逐层查看 Layer 0、1、2、3。只切换显示层查看，没有修改这台 SKN 键盘的键位。
 
-这是适配 ggbr 66 键布局的实现；板上没有 Keychron 的 Mac/Win 拨动开关，仍用原来的软件切层键。
-
-## 层与入口
-
-| Vial 层号 | 名称 | 入口 |
-| --- | --- | --- |
-| 0 | Windows 基础层 | 按住 Caps，再按 `[` |
-| 1 | Mac 基础层 | 按住 Caps，再按 `]` |
-| 2 | Windows Fn | Windows 模式下按住任意 Fn |
-| 3 | 宏/切换层 | 按住 Caps，或右侧 tap dance |
-| 4 | Mac Fn | Mac 模式下按住任意 Fn |
-| 5 | Mac 多媒体 | Mac 模式下先按住 Fn，再按住空格 |
-
-Fn 是空格两侧原有的两个 Fn 位置。多媒体层在空格松开时退出，Fn 松开时退出 Fn 层。Fn 必须先于空格按下；先按空格仍然输入空格。Mac/Windows 切换使用 TO(0)/TO(1)，不是开机自动识别操作系统，也不承诺跨重启记住选择。
-
-左侧修饰键保持 Control、Option、Command；右侧两个修饰键调整为靠近空格的 Command、外侧的 Option，参考 Keychron 的 Mac Command 布局。外侧 Option 保留原先 tap dance 的双击/点按后长按进入宏层动作。Windows 层保持原来的修饰键和 Fn 动作。
-
-## Mac 多媒体层
-
-同时按住 **Fn + 空格**，再按下面的键：
-
-| 按键 | 动作 |
+| SKN 层 | 看到的结构 |
 | --- | --- |
-| 1 / 2 | 屏幕亮度降低 / 提高 |
-| 3 | Mission Control |
-| 4 | Launchpad |
-| 5 / 6 | 无动作：尚无 RGB/背光驱动，避免误触 F5/F6 |
-| 7 / 8 / 9 | 上一曲 / 播放暂停 / 下一曲 |
-| 0 / - / = | 静音 / 音量降低 / 音量提高 |
+| 0 | 完整 Mac 基础层；左侧 Ctrl/Opt/Cmd，右侧 Cmd/Opt；Fn 是 MO(1)；独立 F 区是桌面切换、MCtl、LPad、背光与媒体键 |
+| 1 | Mac Fn；独立 F 区为 F1–F12；多数其他键为透明键；有蓝牙、WIN/Mac、RGB、电量等厂商功能 |
+| 2 | 完整 Windows 基础层；Ctrl/Win/Alt；Fn 是 MO(3)；独立 F 区为 F1–F12 |
+| 3 | Windows Fn；独立 F 区为亮度、Task、File、背光与媒体键；多数其他键为透明键 |
 
-亮度、Mission Control 和 Launchpad 使用 RMK v0.9 已有的 HID 消费者键码。主机系统版本、设置及显示器对这些功能的支持需要实机验证；固件编译通过不代表所有 macOS 版本都保留同名功能。
+参考中 Mac 顶排前两键实际标注 DESKTOP_L-m / DESKTOP_R-m，并非屏幕亮度。本次参考的是可见键位与层关系，没有声称读取了 SKN 的底层固件实现。
 
-## vial.json 更新范围
+## 当前 ggbr 的层结构
 
-本次名称由 HID Keyboard 改为 ggbr minila。66 个键的物理尺寸与矩阵坐标、VID/PID 和 7 个蓝牙 User 键码顺序经核对后保留。
+按用户最新要求：**不新增媒体键，只保留原来已有的媒体功能。** ggbr 没有独立 F 区，所以继续保留数字行，Fn + 数字行为 F1–F12。
 
-`vial.json` 描述键盘外形、矩阵坐标和自定义键码标签；每层按键动作与层数来自 `keyboard.toml`，无需在 JSON 中复制六层键位。BT0/1/2 对应 User0/1/2，Next/Prev/Clear/Switch 对应 User3/4/5/6。
+| Vial 层号 | 名称 | 进入方式 |
+| --- | --- | --- |
+| 0 | Mac 基础层 | 宏层按 `]`，即 PDF(0) |
+| 1 | Mac Fn | Mac 模式按住任意 Fn，即 MO(1) |
+| 2 | Windows 基础层 | 宏层按 `[`，即 PDF(2) |
+| 3 | Windows Fn | Windows 模式按住任意 Fn，即 MO(3) |
+| 4 | 原宏层 | 按住 Caps，或右侧 tap dance |
 
-若刷机后 Vial 仍显示旧的自定义键位，是设备中保存的动态布局覆盖了编译默认值。先导出原 Vial 布局备份，再使用固件支持的重置方式恢复新默认键位；没有在本次固件中启用自动清空存储。若使用全存储清除，会同时影响配对等数据，不应把它当作只刷新界面。
+0、1、2、3 与用户展示的系统配对顺序一致；额外的第 4 层仅用于保留原宏层及已有媒体键，不是新的媒体层。原来的 Fn + 空格媒体入口和独立媒体层均已移除。
+
+- Mac 与 Windows 基础层都写出完整 66 键，不再让 Mac 大量透明键依赖 Windows 基础层。
+- Fn 层使用透明键继承所选系统基础层；两个 Fn 层当前都沿用原 Fn 键位，未添加 SKN 的额外媒体/背光/2.4G/电量显示/锁 Win 功能。
+- Mac 左侧为 Ctrl/Option/Command，右侧两个修饰键为 Command/Option；Windows 保持 Ctrl/Win/Alt 及右 Alt/Ctrl。因键数不同，不复制 SKN 全部 87 个物理位置。
+- 左右两个 Fn 均保留；Caps 点按为 Caps Lock，长按进宏层。右侧 tap dance 的原宏层入口改为 MO(4)。
+- 使用 PDF(0)/PDF(2) 切换并保存系统基础层；模式切换后松开 Caps/所有层键再继续输入。首次无旧存储时从 Mac 基础层 0 启动，后续按保存的基础层启动。不是自动识别主机系统。
+
+## 保留的原有媒体键
+
+| 操作 | 功能 |
+| --- | --- |
+| Fn + 左方向键 | 静音 |
+| Fn + 下方向键 | 音量降低 |
+| Fn + 右方向键 | 音量提高 |
+| 宏层 + 左方向键 | 上一曲 |
+| 宏层 + 下方向键 | 播放/暂停 |
+| 宏层 + 右方向键 | 下一曲 |
+
+原来的两个文本宏、蓝牙前后档位、导航及复制/粘贴组合继续保留。没有把原宏层合并进 Fn 并重新安排这些按键。
+
+## vial.json 与已有存储
+
+`vial.json` 继续使用 ggbr minila 名称、已核对的 66 键物理布局和 7 个蓝牙自定义键码。层数及动作由 `keyboard.toml` 提供，Vial 应读取五层。
+
+本次层号重新排列；刷机前先导出当前 Vial 配置备份。旧动态布局若仍被保留，会覆盖编译默认值，需要恢复新默认键位。不要直接把旧五/六层布局不作调整地导回去，也不要仅按层数判断版本：旧项目与当前五层可能含义不同。
+
+本次未启用自动清空存储；全存储清除还可能删除蓝牙配对信息。完成初始化后可通过“按住 Caps + ]”选择并保存 Mac，或“按住 Caps + [”选择并保存 Windows。
 
 ## split_central_sleep_timeout_seconds
 
