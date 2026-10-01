@@ -2,7 +2,7 @@
 
 This branch ports the [ggbr ZMK configuration](https://github.com/Henvy-Mango/zmk-config) to [RMK v0.9](https://rmk.rs/docs/getting_started/introduction). The nRF52840 matrix uses the same 5 row pins, 14 column pins, diode direction, and 66 physical key positions as the ZMK board.
 
-See [配置核对与待确认差异](CONFIG_AUDIT.md) for the configuration audit. **COL9 needs a PCB check:** the supplied schematic shows P1.06, while the original ZMK uses P0.09. P0.09 is retained at the owner's request until the actual wiring is confirmed.
+See [配置核对与硬件版本差异](CONFIG_AUDIT.md) for the configuration audit. **This firmware targets the 2025-05-06 manufactured PCB:** its Gerbers confirm COL9 connects to E73 pin 41 / P0.09, matching the original ZMK configuration. The newer EDA revision uses pin 42 / P1.06; do not apply that pin change to this board.
 
 ## Mapped behavior
 

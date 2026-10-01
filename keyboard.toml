@@ -11,8 +11,8 @@ chip = "nrf52840"
 [matrix]
 # ZMK's col2row diode direction and active-high rows match RMK's defaults.
 row_pins = ["P0_17", "P0_20", "P0_13", "P0_22", "P0_30"]
-# Hardware check pending: the supplied schematic connects COL9 to P1.06,
-# while the original ZMK uses P0.09. Keep P0.09 until the PCB is confirmed.
+# Confirmed from the 2025-05-06 manufacturing Gerbers: COL9 is E73 pin 41,
+# P0.09, matching ZMK. The newer EDA revision uses pin 42 / P1.06 instead.
 col_pins = ["P1_13", "P0_02", "P0_29", "P0_31", "P0_15", "P0_24", "P1_00", "P1_02", "P1_04", "P0_09", "P1_11", "P1_10", "P0_03", "P0_28"]
 
 # ================= layout ==================
