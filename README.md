@@ -9,6 +9,7 @@ This branch ports the [ggbr ZMK configuration](https://github.com/Henvy-Mango/zm
 - Shift + Shift + B enters the bootloader; Shift + Shift + Backspace reboots; Shift + Shift + U toggles preferred USB/BLE output.
 - The macro layer has previous/next BLE profile keys. With the default three RMK profiles, `User4` is previous and `User3` is next. `User5` clears the current bond when assigned in Vial; it does not clear every profile.
 - Caps Lock indicator, battery ADC divider, BLE transmit power, and 15-minute BLE idle sleep.
+- The original external VCC control pin (`P1.09`, active low) is held inactive at startup so the unused RGB underglow rail remains off. This uses RMK's `[[output]]` configuration; the pin is not the `P0.13` used in the nice!nano example.
 
 ## Differences from ZMK
 

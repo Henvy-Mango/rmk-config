@@ -104,6 +104,13 @@ operations = [
 [light]
 capslock = { pin = "P0_05", low_active = false}
 
+# ZMK's EXT_POWER node uses P1.09 with GPIO_ACTIVE_LOW for the RGB underglow rail.
+# The underglow driver is not part of this RMK configuration, so keep that rail off.
+[[output]]
+pin = "P1_09"
+low_active = true
+initial_state_active = false
+
 [ble]
 enabled = true
 battery_adc_pin = "P0_04"
