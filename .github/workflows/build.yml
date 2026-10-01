@@ -1,59 +1,14 @@
 name: Build RMK firmware
-
 on:
   workflow_dispatch:
   push:
+    paths:
+      - "**"
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-      - uses: dtolnay/rust-toolchain@1.96.0
-      - uses: cargo-bins/cargo-binstall@main
-
-      - name: Install RMK build tools
-        run: cargo binstall cargo-make rmkit flip-link -y
-
-      # RMK's nRF BLE dependencies compile ARM assembly with GCC. Ubuntu's
-      # recommended C/C++ runtime packages are unnecessary for this build.
-      - name: Install ARM GCC
-        run: |
-          sudo sed -i 's|azure.archive.ubuntu.com|archive.ubuntu.com|g' /etc/apt/sources.list.d/ubuntu.sources
-          sudo apt-get update -o Acquire::Retries=3
-          sudo apt-get install -y --no-install-recommends -o Acquire::Retries=3 gcc-arm-none-eabi
-
-      - name: Create RMK v0.9 project
-        run: rmkit create --keyboard-toml-path keyboard.toml --vial-json-path vial.json --version 0.9 --target-dir rmk
-
-      - name: Pin generated Rust toolchain
-        working-directory: rmk
-        run: |
-          sed -i 's/^channel = .*/channel = "1.96.0"/' rust-toolchain.toml
-          rustup toolchain install
-
-      - uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: rmk -> target
-
-      - name: Build firmware
-        working-directory: rmk
-        env:
-          RUST_MIN_STACK: "67108864"
-        run: |
-          cargo build --release
-          cargo make uf2 --release
-
-      - name: Upload UF2 firmware
-        uses: actions/upload-artifact@v7
-        with:
-          name: ggbr-rmk-v0.9-uf2
-          path: rmk/*.uf2
-          if-no-files-found: error
-
-      - name: Upload HEX firmware
-        uses: actions/upload-artifact@v7
-        with:
-          name: ggbr-rmk-v0.9-hex
-          path: rmk/*.hex
-          if-no-files-found: error
+    uses: rmk-rs/rmk/.github/workflows/user_build.yml@rmk-v0.9.0
+    with:
+      keyboard_toml_path: "keyboard.toml"
+      vial_json_path: "vial.json"
+      rmk_version: "0.9"

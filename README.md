@@ -16,6 +16,6 @@ RMK's configuration-only v0.9 template does not drive this board's 66 WS2812 und
 
 ## Build and flash
 
-Every push and manual workflow dispatch runs [Build RMK firmware](.github/workflows/build.yml). The workflow generates the official RMK `0.9` project template and builds UF2 and HEX firmware in GitHub Actions. Download the UF2 artifact from the successful run's **Artifacts** section.
+Every push and manual workflow dispatch runs [Build RMK firmware](.github/workflows/build.yml), following the [official cloud compilation guide](https://rmk.rs/docs/user_guide/create_firmware/cloud_compilation.html). It calls RMK's `rmk-v0.9.0` reusable workflow with the `0.9` project template. Download the UF2 artifact from the successful run's **Artifacts** section.
 
 Check the bootloader on the physical ggbr before flashing. The RMK nRF52840 template generates UF2 for the Adafruit nRF52 bootloader with application flash starting at `0x1000`. A successful cloud build confirms that the configuration compiles; it cannot confirm this board's bootloader or electrical behavior. If an earlier RMK keymap was saved through Vial, clear the stored layout so the new defaults can take effect.
