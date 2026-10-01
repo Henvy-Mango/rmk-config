@@ -104,8 +104,8 @@ operations = [
 [light]
 capslock = { pin = "P0_05", low_active = false}
 
-# ZMK's EXT_POWER node uses P1.09 with GPIO_ACTIVE_LOW for the RGB underglow rail.
-# The underglow driver is not part of this RMK configuration, so keep that rail off.
+# P1.09 drives the AO3407 gate for the RGB underglow rail (active low).
+# Keep the rail off after GPIO initialization while the underglow driver is absent.
 [[output]]
 pin = "P1_09"
 low_active = true
@@ -131,6 +131,6 @@ split_central_sleep_timeout_seconds = 900
 
 [chip.nrf52840]
 # ZMK's BOARD_ENABLE_DCDC selected SOC_DCDC_NRF52X (the REG1 converter).
-# Do not enable the separate high-voltage REG0 converter without board evidence.
+# The board supplies the E73 module from 3.3V; leave the high-voltage REG0 off.
 dcdc_reg0 = false
 dcdc_reg1 = true
