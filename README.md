@@ -6,13 +6,13 @@ See [配置核对与硬件版本差异](CONFIG_AUDIT.md) for the configuration a
 
 ## Mapped behavior
 
-- Four layers: base, Mac modifier swap, Fn, and macro/media.
+- Six layers: Windows base (0), Mac base (1), Windows Fn (2), macro (3), Mac Fn (4), and Mac media (5). See [Mac layout and Vial notes](MAC_LAYOUT.md).
 - Use RMK v0.9 defaults: 20 ms debounce, 250 ms Morse hold/gap timing, and a 50 ms combo window. These settings are omitted from TOML so RMK supplies its defaults. Combos have no layer restriction, so they also work on the Mac layer; RMK still matches actions rather than physical positions.
-- Grave/Escape, Caps Lock layer-tap, right Ctrl tap dance, right GUI tap dance, and two numeric macros.
+- Grave/Escape, Caps Lock layer-tap, right Ctrl tap dance, Mac right Option tap dance, and two numeric macros.
 - Tap dances and Caps Lock layer-tap use RMK's default Normal Morse mode, without a custom ZMK timing/decision profile. Vial starts unlocked, matching the source's disabled Studio locking.
 - Shift + Shift + B enters the bootloader; Shift + Shift + Backspace reboots; Shift + Shift + U toggles preferred USB/BLE output.
 - The macro layer has previous/next BLE profile keys. With the default three RMK profiles, `User4` is previous and `User3` is next. `User5` clears the current bond when assigned in Vial; it does not clear every profile.
-- Caps Lock indicator, battery ADC divider, BLE transmit power, and 15-minute BLE idle sleep.
+- Caps Lock indicator, battery ADC divider, BLE transmit power, and a 15-minute BLE software idle state (not System OFF).
 - The original external VCC control pin (`P1.09`, active low) is driven high after GPIO initialization so the unused RGB underglow rail remains off. The schematic's 2 MΩ gate pull-down turns the AO3407 switch on while the MCU pin is high-impedance during reset. RMK's `[[output]]` setting does not change that hardware default.
 - The nRF52840 REG1 DC/DC converter is enabled to match ZMK's `BOARD_ENABLE_DCDC` setting. The E73 module has the necessary inductors onboard, as [confirmed by Nordic support](https://devzone.nordicsemi.com/f/nordic-q-a/102423/nrf52840-on-e73-2g4m08s1c-not-running-flashed-firmware/439756). The board feeds the module from a 3.3V LDO, so the separate high-voltage REG0 converter remains disabled.
 

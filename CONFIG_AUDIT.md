@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | 消抖 | 显式 5 ms | 删除覆盖，使用 RMK 默认 20 ms |
 | Caps Lock 点按/长按 | 显式 200 ms、normal 模式 | 删除覆盖，使用 RMK 默认 Normal 模式，hold/gap 各 250 ms |
-| 右 Ctrl/GUI tap dance | 200 ms、独立 `hold_on_other_press` profile | 删除专用 profile，使用 RMK 默认判定和 hold/gap 各 250 ms；保留双击/点按后长按的 MO(3) 动作 |
+| 右 Ctrl / Mac 右 Option tap dance | 200 ms、独立 `hold_on_other_press` profile | 删除专用 profile，使用 RMK 默认判定和 hold/gap 各 250 ms；保留双击/点按后长按的 MO(3) 动作 |
 | 组合键窗口 | 显式 50 ms（更早的配置曾为 150 ms） | 删除覆盖，RMK v0.9 默认也是 50 ms |
 | 组合键层限制 | 仅 layer 0 | 删除限制，使 Mac 层也可触发 |
 | 主机配置解锁 | 默认 Vial 锁定 | `host.insecure = true`，沿用旧 `CONFIG_ZMK_STUDIO_LOCKING=n`；连接的主机无需实体解锁组合即可使用受保护的 Vial 操作 |
@@ -22,7 +22,7 @@
 | --- | --- |
 | 主控 | nRF52840 / E73-2G4M08S1C |
 | 矩阵 | 5×14，66 个实际键位；col2row；引脚与旧配置及打样 Gerber 一致，新旧 PCB 的 COL9 差异见下方 |
-| 四层键位、宏、多媒体键 | 已迁移；Grave/Escape 通过 fork 保留 ZMK 的 Shift/GUI 条件及修饰键抑制方式 |
+| 六层键位、宏、多媒体键 | 原四层基础上新增 Mac Fn 和 Mac 多媒体层，详见 [MAC_LAYOUT.md](MAC_LAYOUT.md)；Grave/Escape 通过 fork 保留 ZMK 的 Shift/GUI 条件及修饰键抑制方式 |
 | USB + BLE | 已启用；nRF52840 的默认芯片配置启用 USB |
 | 低功耗扫描 | 官方 nRF52840 Cargo 模板已启用 `async_matrix`，不必另加 TOML 开关 |
 | NFC 引脚作为 GPIO | 官方模板已启用 `embassy-nrf/nfc-pins-as-gpio`，适用于旧配置中的 P0.09 |
@@ -34,7 +34,7 @@
 | 蓝牙 PHY | 保留 RMK 的 2M PHY 默认值；旧适配器连接问题再有针对性调整 |
 | 空闲休眠 | 900 秒；官方 idle manager 支持单体 BLE 键盘，尽管参数名带 split |
 | 存储 | Cargo 默认启用 storage；nRF52840 默认地址 0xA0000、32 个 4 KiB 扇区；使用 RMK 格式，不能沿用 ZMK NVS 数据 |
-| Vial | 默认 Cargo 功能已启用；`vial.json` 保留实际物理布局 |
+| Vial | 默认 Cargo 功能已启用；`vial.json` 名称更新为 ggbr minila，保留已核对的 66 键物理布局和 7 个 BLE 自定义键码；各层动作由 keyboard.toml 提供 |
 | 看门狗 | RMK v0.9 默认 Cargo 功能已启用，无需新增开关 |
 | 低频时钟 | 官方 BLE 初始化使用内部 RC，与原 ZMK 的 K32SRC_RC 一致；旧板有外部 32.768 kHz 晶振焊盘，但没有新版 C5/C6 外接负载电容焊盘；v0.9 芯片 TOML 未提供 LFCLK 来源选项 |
 | 云端编译 | 官方 `user_build.yml@rmk-v0.9.0`，传入 `rmk_version: "0.9"` |
