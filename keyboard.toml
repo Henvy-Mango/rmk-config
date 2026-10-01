@@ -11,6 +11,8 @@ chip = "nrf52840"
 [matrix]
 # ZMK's col2row diode direction and active-high rows match RMK's defaults.
 row_pins = ["P0_17", "P0_20", "P0_13", "P0_22", "P0_30"]
+# Hardware check pending: the supplied schematic connects COL9 to P1.06,
+# while the original ZMK uses P0.09. Keep P0.09 until the PCB is confirmed.
 col_pins = ["P1_13", "P0_02", "P0_29", "P0_31", "P0_15", "P0_24", "P1_00", "P1_02", "P1_04", "P0_09", "P1_11", "P1_10", "P0_03", "P0_28"]
 
 # ================= layout ==================
@@ -71,10 +73,19 @@ _  _  _  _  _  _  _  _  MediaPrevTrack  MediaPlayPause  MediaNextTrack
 
 # ================= behavior ================
 [behavior.morse]
+# ZMK v0.3 layer-tap is tap-preferred with a 200 ms tapping term.
+normal_mode = true
+hold_timeout = "200ms"
+gap_timeout = "200ms"
 morses = [
-    { tap = "RCTRL", hold = "RCTRL", hold_after_tap = "MO(3)", double_tap = "MO(3)" },
-    { tap = "RGUI", hold = "RGUI", hold_after_tap = "MO(3)", double_tap = "MO(3)" }
+    { tap = "RCTRL", hold = "RCTRL", hold_after_tap = "MO(3)", double_tap = "MO(3)", profile = "ZMK_DANCE" },
+    { tap = "RGUI", hold = "RGUI", hold_after_tap = "MO(3)", double_tap = "MO(3)", profile = "ZMK_DANCE" }
 ]
+
+[behavior.morse.profiles]
+# ZMK resolves a tap dance when another key is pressed. Keep modifier chords
+# responsive, without changing Caps Lock's tap-preferred layer-tap behavior.
+ZMK_DANCE = { hold_on_other_press = true, hold_timeout = "200ms", gap_timeout = "200ms" }
 
 [behavior.fork]
 # ZMK &gresc sends Grave with Shift or GUI, Escape otherwise.
@@ -83,11 +94,13 @@ forks = [
 ]
 
 [behavior.combo]
-timeout = "150ms"
+# Original ZMK combos use the default 50 ms window and no layer restriction.
+# RMK matches actions rather than physical positions; see CONFIG_AUDIT.md.
+timeout = "50ms"
 combos = [
-    { actions = ["LShift", "RShift", "B"], output = "Bootloader", layer = 0 },
-    { actions = ["LShift", "RShift", "Backspace"], output = "Reboot", layer = 0 },
-    { actions = ["LShift", "RShift", "U"], output = "User6", layer = 0 },
+    { actions = ["LShift", "RShift", "B"], output = "Bootloader" },
+    { actions = ["LShift", "RShift", "Backspace"], output = "Reboot" },
+    { actions = ["LShift", "RShift", "U"], output = "User6" },
 ]
 
 [[behavior.macro.macros]]
@@ -119,6 +132,8 @@ adc_divider_total = 2820
 default_tx_power = 8
 
 [host]
+# Preserve CONFIG_ZMK_STUDIO_LOCKING=n: host configuration starts unlocked.
+insecure = true
 unlock_keys = [[2, 4], [2, 7]]
 
 [storage]
@@ -126,6 +141,10 @@ unlock_keys = [[2, 4], [2, 7]]
 # clear_storage = true
 
 [rmk]
+# ZMK's GPIO matrix defaults to 5 ms debounce on both press and release.
+debounce_time = 5
+# User3..User6 bindings above depend on having exactly three BLE profiles.
+ble_profiles_num = 3
 # ZMK used a 15-minute idle sleep timeout.
 split_central_sleep_timeout_seconds = 900
 
