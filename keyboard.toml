@@ -130,7 +130,7 @@ unlock_keys = [[2, 4], [2, 7]]
 
 [storage]
 enabled = true
-clear_storage = true
+clear_storage = false
 
 [rmk]
 ble_profiles_num = 3
