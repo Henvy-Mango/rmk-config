@@ -1,5 +1,3 @@
-# RMK v0.9: https://rmk.rs/docs/getting_started/introduction
-# Ported from https://github.com/Henvy-Mango/zmk-config (ggbr).
 [keyboard]
 name = "ggbr minila"
 product_name = "ggbr minila"
@@ -9,11 +7,10 @@ manufacturer = "naomi233"
 chip = "nrf52840"
 
 [matrix]
-# ZMK's col2row diode direction and active-high rows match RMK's defaults.
 row_pins = ["P0_17", "P0_20", "P0_13", "P0_22", "P0_30"]
-# Confirmed from the 2025-05-06 manufacturing Gerbers: COL9 is E73 pin 41,
-# P0.09, matching ZMK. The newer EDA revision uses pin 42 / P1.06 instead.
 col_pins = ["P1_13", "P0_02", "P0_29", "P0_31", "P0_15", "P0_24", "P1_00", "P1_02", "P1_04", "P0_09", "P1_11", "P1_10", "P0_03", "P0_28"]
+
+row2col = false
 
 # ================= layout ==================
 [layout]
@@ -30,30 +27,6 @@ map = """
 [keymap]
 layers = 5
 
-# Match the inspected SKN layer pairs: Mac 0/1, Windows 2/3.
-# Both base layers are complete; Fn transparencies inherit only the selected base.
-# Keep the original macro/media bindings on layer 4; no new media shortcuts.
-# Fn+number stays F1-F12 on this 66-key board without a separate F row.
-[[keymap.layer]]
-name = "mac_base"
-keys = """
-Escape  Kc1  Kc2  Kc3  Kc4  Kc5  Kc6  Kc7  Kc8  Kc9  Kc0  Minus  Equal  Backspace
-Tab  Q  W  E  R  T  Y  U  I  O  P  LeftBracket  RightBracket  Backslash
-LT(4, CapsLock)  A  S  D  F  G  H  J  K  L  Semicolon  Quote  Enter
-LShift  Z  X  C  V  B  N  M  Comma  Dot  Slash  RShift  UP  Delete
-LCtrl  LAlt  LGui  MO(1)  Space  MO(1)  RGui  TD(1)  Left  Down  Right
-"""
-
-[[keymap.layer]]
-name = "mac_fn"
-keys = """
-WM(Grave,LShift)  F1  F2  F3  F4  F5  F6  F7  F8  F9  F10  F11  F12  _
-_  WM(Kc9, LShift)  WM(Kc0, LShift)  UP  _  _  Calculator  _  PrintScreen  ScrollLock  Pause  _  _  _
-_  _  Left  Down  Right  _  _  Insert  Home  PageUp  _  _  _
-_  _  _  _  _  _  _  _  End  PageDown  _  _  _  _
-_  _  _  _  _  _  _  _  AudioMute  AudioVolDown  AudioVolUp
-"""
-
 [[keymap.layer]]
 name = "win_base"
 keys = """
@@ -61,7 +34,7 @@ Escape  Kc1  Kc2  Kc3  Kc4  Kc5  Kc6  Kc7  Kc8  Kc9  Kc0  Minus  Equal  Backspac
 Tab  Q  W  E  R  T  Y  U  I  O  P  LeftBracket  RightBracket  Backslash
 LT(4, CapsLock)  A  S  D  F  G  H  J  K  L  Semicolon  Quote  Enter
 LShift  Z  X  C  V  B  N  M  Comma  Dot  Slash  RShift  UP  Delete
-LCtrl  LGui  LAlt  MO(3)  Space  MO(3)  RAlt  TD(0)  Left  Down  Right
+LCtrl  LGui  LAlt  MO(1)  Space  MO(1)  RAlt  TD(0)  Left  Down  Right
 """
 
 [[keymap.layer]]
@@ -75,10 +48,30 @@ _  _  _  _  _  _  _  _  AudioMute  AudioVolDown  AudioVolUp
 """
 
 [[keymap.layer]]
+name = "mac_base"
+keys = """
+Escape  Kc1  Kc2  Kc3  Kc4  Kc5  Kc6  Kc7  Kc8  Kc9  Kc0  Minus  Equal  Backspace
+Tab  Q  W  E  R  T  Y  U  I  O  P  LeftBracket  RightBracket  Backslash
+LT(4, CapsLock)  A  S  D  F  G  H  J  K  L  Semicolon  Quote  Enter
+LShift  Z  X  C  V  B  N  M  Comma  Dot  Slash  RShift  UP  Delete
+LCtrl  LAlt  LGui  MO(3)  Space  MO(3)  RGui  TD(0)  Left  Down  Right
+"""
+
+[[keymap.layer]]
+name = "mac_fn"
+keys = """
+WM(Grave,LShift)  F1  F2  F3  F4  F5  F6  F7  F8  F9  F10  F11  F12  _
+_  WM(Kc9, LShift)  WM(Kc0, LShift)  UP  _  _  Calculator  _  PrintScreen  ScrollLock  Pause  _  _  _
+_  _  Left  Down  Right  _  _  Insert  Home  PageUp  _  _  _
+_  _  _  _  _  _  _  _  End  PageDown  _  _  _  _
+_  _  _  _  _  _  _  _  AudioMute  AudioVolDown  AudioVolUp
+"""
+
+[[keymap.layer]]
 name = "macro_layer"
 keys = """
 _  Macro0  Macro1  _  _  _  _  _  _  _  _  User4  User3  _
-_  Home  End  _  _  _  _  _  _  _  _  PDF(2)  PDF(0)  _
+_  Home  End  _  _  _  _  _  _  _  _  PDF(0)  PDF(2)  _
 _  _  _  _  _  _  _  _  _  _  WM(Insert, LCtrl)  WM(Insert, LShift)  _
 _  _  _  _  _  _  _  _  _  _  _  _  _  _
 _  _  _  _  _  _  _  _  MediaPrevTrack  MediaPlayPause  MediaNextTrack
@@ -86,25 +79,21 @@ _  _  _  _  _  _  _  _  MediaPrevTrack  MediaPlayPause  MediaNextTrack
 
 # ================= behavior ================
 [behavior.morse]
-# Use RMK v0.9's default Morse mode and 250 ms hold/gap timings.
 morses = [
-    { tap = "RCTRL", hold = "RCTRL", hold_after_tap = "MO(4)", double_tap = "MO(4)" },
-    { tap = "RALT", hold = "RALT", hold_after_tap = "MO(4)", double_tap = "MO(4)" }
+    { tap = "RCTRL", hold = "RCTRL", hold_after_tap = "MO(4)", double_tap = "MO(4)" }
 ]
 
 [behavior.fork]
-# ZMK &gresc sends Grave with Shift or GUI, Escape otherwise.
 forks = [
-    { trigger = "Escape", negative_output = "Escape", positive_output = "Grave", match_any = "LShift|RShift|LGui|RGui", bindable = false }
+    { trigger = "Escape", negative_output = "Escape", positive_output = "Grave", match_any = "LShift", bindable = false }
 ]
 
 [behavior.combo]
-# Use RMK v0.9's default combo window (50 ms), with no layer restriction.
-# RMK matches actions rather than physical positions; see CONFIG_AUDIT.md.
 combos = [
     { actions = ["LShift", "RShift", "B"], output = "Bootloader" },
     { actions = ["LShift", "RShift", "Backspace"], output = "Reboot" },
     { actions = ["LShift", "RShift", "U"], output = "User6" },
+    { actions = ["LCtrl", "LShift", "RShift", "R"], output = "User5" },
 ]
 
 [[behavior.macro.macros]]
@@ -136,24 +125,20 @@ adc_divider_total = 2820
 default_tx_power = 8
 
 [host]
-# Preserve CONFIG_ZMK_STUDIO_LOCKING=n: host configuration starts unlocked.
 insecure = true
 unlock_keys = [[2, 4], [2, 7]]
 
 [storage]
-# Set `clear_storage` to true to clear all the stored info when the keyboard boots
-# clear_storage = true
+enabled = true
+clear_storage = false
 
 [rmk]
-# Use RMK v0.9's default debounce time (20 ms).
-# User3..User6 bindings above depend on having exactly three BLE profiles.
 ble_profiles_num = 3
 # Keyboard-wide BLE idle manager: 900 s = 15 min; 0 disables this manager.
 # Publishes a sleep state and suppresses idle battery notifications, not System OFF.
 split_central_sleep_timeout_seconds = 900
 
 [chip.nrf52840]
-# ZMK's BOARD_ENABLE_DCDC selected SOC_DCDC_NRF52X (the REG1 converter).
 # The board supplies the E73 module from 3.3V; leave the high-voltage REG0 off.
 dcdc_reg0 = false
 dcdc_reg1 = true
