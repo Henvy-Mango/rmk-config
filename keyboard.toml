@@ -122,7 +122,7 @@ enabled = true
 battery_adc_pin = "P0_04"
 adc_divider_measured = 2000
 adc_divider_total = 2820
-default_tx_power = 8
+# default_tx_power = 8
 
 [host]
 insecure = true
@@ -134,9 +134,6 @@ clear_storage = false
 
 [rmk]
 ble_profiles_num = 3
-# Keyboard-wide BLE idle manager: 900 s = 15 min; 0 disables this manager.
-# Publishes a sleep state and suppresses idle battery notifications, not System OFF.
-split_central_sleep_timeout_seconds = 900
 
 [chip.nrf52840]
 # The board supplies the E73 module from 3.3V; leave the high-voltage REG0 off.
